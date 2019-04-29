@@ -1,0 +1,37 @@
+
+
+properties([
+    parameters([\
+    choice(choices: ['ON', 'QC'].join("\n"), description: 'SELECT PROVINCE ', name: 'state'),
+    string(defaultValue: 'SAGAR', description: 'ENTER YOUR  NAME', name: 'name', trim: false)
+    ])
+    
+])
+
+if(state=='ON')
+    {
+        j_node='master'
+    } else
+    {
+        j_node='w4'
+    }
+
+node(j_node) {
+    
+    stage ('Building the package'){
+    echo 'This is the bulding package'
+    sleep 3
+    }
+    
+    stage ('QA Test'){
+    echo 'This is the Quality Test'
+
+    echo "Choice: ${params.name}"
+    echo "Choice: ${params.state}"
+    
+    }
+    
+    stage ('Deploy to production'){
+    echo 'Deploying the package to production'
+    }
+}
